@@ -1,6 +1,10 @@
-import io.restassured.RestAssured;
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
-import org.junit.Before;
+import io.restassured.response.ValidatableResponse;
+import order.OrderApi;
+import order.OrderMethods;
+import order.Orders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -8,7 +12,7 @@ import java.util.List;
 
 @RunWith(Parameterized.class)
 
-public class OrdersTest extends BaseTest{
+public class OrdersTest {
     private OrderApi orderApi = new OrderApi();
     private final String firstName;
     private final String lastName;
@@ -19,6 +23,9 @@ public class OrdersTest extends BaseTest{
     private final String deliveryDate;
     private final String comment;
     private final List<String> color;
+    private OrderApi step;
+    private OrderMethods check;
+    int track;
     public OrdersTest(String firstName, String lastName, String address, int metroStation, String phone, int rentTime, String deliveryDate, String comment, List<String> color) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,12 +48,11 @@ public class OrdersTest extends BaseTest{
         };
     }
     @Test
+    @DisplayName("Check orders response body")
+    @Description("Test for order creation")
     public void checkOrdersResponseBodyTest() {
         Orders orders = new Orders(firstName, lastName, address, metroStation, phone, rentTime, deliveryDate, comment);
-
-        Response response = orderApi.createOrder(orders);
-
-        System.out.println(response.body().asString());
+        ValidatableResponse response = orderApi.createOrder(orders);
     }
 }
 

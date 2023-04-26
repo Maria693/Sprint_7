@@ -1,3 +1,5 @@
+package courier;
+
 public class CourierLogin {
     private String login;
     private String password;
@@ -6,8 +8,8 @@ public class CourierLogin {
         this.login = login;
         this.password = password;
     }
-
-    public CourierLogin() {
+    public static CourierLogin from(Courier courier) {
+        return new CourierLogin(courier.getLogin(), courier.getPassword());
     }
 
     public String getLogin() {
@@ -17,11 +19,9 @@ public class CourierLogin {
     public void setLogin(String login) {
         this.login = login;
     }
-
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
